@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login - SAVOR BITES</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="responsive.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff6600, #ff3300);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 80%);
+            animation: moveWave 6s infinite linear;
+            opacity: 0.5;
+        }
+
+        .wave:nth-child(1) {
+            top: -50%;
+            left: -50%;
+            animation-duration: 8s;
+            animation-delay: 0s;
+        }
+
+        .wave:nth-child(2) {
+            top: -60%;
+            left: -60%;
+            animation-duration: 10s;
+            animation-delay: 2s;
+        }
+
+        .wave:nth-child(3) {
+            top: -70%;
+            left: -70%;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+
+        @keyframes moveWave {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(50%, 50%) scale(1.2);
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-container h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .auth-container label {
+            display: block;
+            font-weight: 500;
+            text-align: left;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .auth-container input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .auth-container input:focus {
+            border-color: #ff6600;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 102, 0, 0.5);
+        }
+
+        .auth-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .auth-container button:hover {
+            background-color: #e65c00;
+            transform: translateY(-2px);
+        }
+
+        .auth-container button:active {
+            transform: translateY(1px);
+        }
+
+        .auth-container p {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .auth-container a {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-container a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    <div class="auth-container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ56f7YWp7TZQO9RAaybH_uDv_uG4HP2ZnMw&s" alt="Logo" class="logo">
+        <h2>Welcome Back</h2>
+        <form onsubmit="validateLogin(event)">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+    </div>
+
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const storedPassword = localStorage.getItem(email);
+
+            if (storedPassword && storedPassword === password) {
+                localStorage.setItem("userEmail", email);
+                alert("Login successful!");
+                window.location.href = "index.html";
+            } else {
+                alert("Invalid email or password!");
+            }
+        }
+
+        function showSignup() {
+            document.body.innerHTML = `
+                <div class="auth-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ56f7YWp7TZQO9RAaybH_uDv_uG4HP2ZnMw&s" alt="Logo" class="logo">
+                    <h2>Create an Account</h2>
+                    <form onsubmit="registerUser(event)">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        
+                        <button type="submit">Sign Up</button>
+                    </form>
+                    <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+                </div>
+            `;
+        }
+
+        function showLogin() {
+            document.body.innerHTML = `
+                <div class="auth-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ56f7YWp7TZQO9RAaybH_uDv_uG4HP2ZnMw&s" alt="Logo" class="logo">
+                    <h2>Welcome Back</h2>
+                    <form onsubmit="validateLogin(event)">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        
+                        <button type="submit">Login</button>
+                    </form>
+                    <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+                </div>
+            `;
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (localStorage.getItem(email)) {
+                alert("This email is already registered!");
+            } else {
+                localStorage.setItem(email, password);
+                alert("Account created successfully!");
+                showLogin();
+            }
+        }
+    </script>
+</body>
+</html>
